@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منوی غذا و نوشیدنی</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>منوی غذا و نوشیدنی</h1>
+
+        <!-- Menu Section -->
+        <div class="menu-section">
+            <div class="category-tabs" id="categoryTabs">
+                <!-- Categories will be added here by JavaScript -->
+            </div>
+            <div class="menu-items" id="menuItems">
+                <!-- Menu items will be added here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Invoice Section -->
+        <div class="invoice-section">
+            <h2>سفارش شما</h2>
+            <div id="invoiceContent">
+                <div class="invoice-empty" id="emptyInvoice">هنوز آیتمی اضافه نشده است</div>
+                <div id="invoiceTable" class="hidden">
+                    <div class="table-container">
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>آیتم</th>
+                                    <th>تعداد</th>
+                                    <th>قیمت</th>
+                                    <th>جمع</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoiceItems">
+                                <!-- Invoice items will be added here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="totals">
+                        <div class="subtotal">
+                            <span>جمع جزء:</span>
+                            <span id="subtotalValue">۰ تومان</span>
+                        </div>
+
+                        <div class="discount-row">
+                            <label class="discount-input">
+                                تخفیف (٪):
+                                <input type="number" id="discountInput" min="0" max="100" value="0">
+                            </label>
+                            <span id="discountValue">-۰ تومان</span>
+                        </div>
+
+                        <div class="final-total">
+                            <span>جمع کل:</span>
+                            <span id="totalValue">۰ تومان</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

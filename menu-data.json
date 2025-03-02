@@ -1,0 +1,41 @@
+{
+    "پیش غذاها": [
+        { "id": "app1", "name": "نان سیر", "price": 49000, "category": "پیش غذاها" },
+        { "id": "app2", "name": "استیک پنیر موزارلا", "price": 69000, "category": "پیش غذاها" },
+        { "id": "app3", "name": "بال مرغ", "price": 89000, "category": "پیش غذاها" },
+        { "id": "app4", "name": "ناچوز", "price": 79000, "category": "پیش غذاها" }
+    ],
+    "غذای اصلی": [
+        { "id": "main1", "name": "چیزبرگر", "price": 129000, "category": "غذای اصلی" },
+        { "id": "main2", "name": "مرغ گریل شده", "price": 149000, "category": "غذای اصلی" },
+        { "id": "main3", "name": "استیک", "price": 199000, "category": "غذای اصلی" },
+        { "id": "main4", "name": "پاستا آلفردو", "price": 139000, "category": "غذای اصلی" },
+        { "id": "main5", "name": "فیش اند چیپس", "price": 159000, "category": "غذای اصلی" }
+    ],
+    "پیتزاها": [
+        { "id": "pizza1", "name": "مارگاریتا", "price": 109000, "category": "پیتزاها" },
+        { "id": "pizza2", "name": "پپرونی", "price": 129000, "category": "پیتزاها" },
+        { "id": "pizza3", "name": "سبزیجات", "price": 119000, "category": "پیتزاها" },
+        { "id": "pizza4", "name": "مخصوص", "price": 149000, "category": "پیتزاها" }
+    ],
+    "مخلفات": [
+        { "id": "side1", "name": "سیب زمینی سرخ کرده", "price": 39000, "category": "مخلفات" },
+        { "id": "side2", "name": "پیاز سوخاری", "price": 49000, "category": "مخلفات" },
+        { "id": "side3", "name": "سالاد فصل", "price": 49000, "category": "مخلفات" },
+        { "id": "side4", "name": "سالاد کلم", "price": 34000, "category": "مخلفات" }
+    ],
+    "دسرها": [
+        { "id": "dessert1", "name": "کیک شکلاتی", "price": 69000, "category": "دسرها" },
+        { "id": "dessert2", "name": "چیز کیک", "price": 79000, "category": "دسرها" },
+        { "id": "dessert3", "name": "بستنی", "price": 49000, "category": "دسرها" },
+        { "id": "dessert4", "name": "پای سیب", "price": 59000, "category": "دسرها" }
+    ],
+    "نوشیدنی‌ها": [
+        { "id": "drink1", "name": "نوشابه", "price": 24000, "category": "نوشیدنی‌ها" },
+        { "id": "drink2", "name": "چای سرد", "price": 29000, "category": "نوشیدنی‌ها" },
+        { "id": "drink3", "name": "قهوه", "price": 34000, "category": "نوشیدنی‌ها" },
+        { "id": "drink4", "name": "شیک", "price": 49000, "category": "نوشیدنی‌ها" },
+        { "id": "drink5", "name": "آبجو بدون الکل", "price": 59000, "category": "نوشیدنی‌ها" },
+        { "id": "drink6", "name": "دلستر", "price": 79000, "category": "نوشیدنی‌ها" }
+    ]
+} 
