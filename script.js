@@ -15,6 +15,7 @@ const subtotalValueEl = document.getElementById("subtotalValue");
 const discountInputEl = document.getElementById("discountInput");
 const discountValueEl = document.getElementById("discountValue");
 const totalValueEl = document.getElementById("totalValue");
+const resetInvoiceBtn = document.getElementById("resetInvoice");
 
 // Initialize the application
 async function init() {
@@ -27,6 +28,7 @@ async function init() {
 
     // Set up event listeners
     discountInputEl.addEventListener("change", handleDiscountChange);
+    resetInvoiceBtn.addEventListener("click", resetInvoice);
   } catch (error) {
     console.error("Error loading menu data:", error);
   }
@@ -248,6 +250,14 @@ function renderInvoice() {
   });
 
   calculateTotals();
+}
+
+// Reset invoice function
+function resetInvoice() {
+  state.selectedItems = {};
+  state.discount = 0;
+  discountInputEl.value = 0;
+  renderInvoice();
 }
 
 // Initialize the app when the DOM is loaded
