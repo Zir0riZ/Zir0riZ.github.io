@@ -268,7 +268,6 @@ h2 {
     top: 0;
     height: 100%;
     width: 32px;
-    background: linear-gradient(to left, transparent, #f0f0f0);
     pointer-events: none;
     z-index: 101;
 }
@@ -280,7 +279,6 @@ h2 {
     top: 0;
     height: 100%;
     width: 32px;
-    background: linear-gradient(to right, transparent, #f0f0f0);
     pointer-events: none;
     z-index: 101;
 }
