@@ -260,5 +260,40 @@ function resetInvoice() {
   renderInvoice();
 }
 
+/// اضافه کردن event listener برای دکمه پرینت
+// const printInvoiceBtn = document.getElementById("printInvoice");
+// printInvoiceBtn.addEventListener("click", printInvoice);
+
+// // تابع پرینت فاکتور
+// function printInvoice() {
+//     const invoiceContent = document.getElementById("invoiceTable").cloneNode(true);
+//     const printWindow = window.open('', '', 'width=600,height=600');
+    
+//     printWindow.document.write(`
+//         <html dir="rtl">
+//             <head>
+//                 <title>پرینت فاکتور</title>
+//                 <style>
+//                     body { font-family: 'Vazirmatn', sans-serif; text-align: right; }
+//                     table { width: 100%; border-collapse: collapse; }
+//                     th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: right; }
+//                     th { background-color: #f2f2f2; }
+//                     .totals { margin-top: 20px; }
+//                     .totals div { display: flex; justify-content: space-between; }
+//                     .final-total { font-weight: bold; font-size: 18px; }
+//                 </style>
+//             </head>
+//             <body>
+//                 <h1>فاکتور سفارش</h1>
+//                 ${invoiceContent.innerHTML}
+//             </body>
+//         </html>
+//     `);
+    
+//     printWindow.document.close();
+//     printWindow.print();
+//     printWindow.close();
+// }
+
 // Initialize the app when the DOM is loaded
 document.addEventListener("DOMContentLoaded", init);
