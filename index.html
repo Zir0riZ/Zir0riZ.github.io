@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منوی غذا و نوشیدنی</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/byekan@v2.0.0/font/BYekan.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -26,7 +26,7 @@
                         <table class="invoice-table">
                             <thead>
                                 <tr>
-                                    <th>آیتم</th>
+                                    <th>کالا و خدمات</th>
                                     <th>تعداد</th>
                                     <th>قیمت</th>
                                     <th>جمع</th>
@@ -37,12 +37,9 @@
                         </table>
                     </div>
                     <div class="totals">
-                        <div class="subtotal"><span>جمع جزء:</span><span id="subtotalValue">۰ تومان</span>
-                        </div>
-                        <div class="discount-row"><label class="discount-input">تخفیف (٪): <input type="number"
-                                    id="discountInput" min="0" max="100" value="0"></label><span id="discountValue">-۰
-                                تومان</span></div>
-                        <div class="final-total"><span>جمع کل:</span><span id="totalValue">۰ تومان</span>
+                        <div class="discount-row"><label class="discount-input">تخفیف <input type="number"
+                                    id="discountInput" min="0" max="100" value="0"></label><span id="discountValue">۰</span></div>
+                        <div class="final-total"><span>جمع نهایی</span><span id="totalValue">۰</span>
                         </div>
                     </div>
                     <button id="resetInvoice" class="reset-invoice-btn">ریست فاکتور</button>

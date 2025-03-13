@@ -11,7 +11,6 @@ const menuItemsEl = document.getElementById("menuItems");
 const invoiceItemsEl = document.getElementById("invoiceItems");
 const emptyInvoiceEl = document.getElementById("emptyInvoice");
 const invoiceTableEl = document.getElementById("invoiceTable");
-const subtotalValueEl = document.getElementById("subtotalValue");
 const discountInputEl = document.getElementById("discountInput");
 const discountValueEl = document.getElementById("discountValue");
 const totalValueEl = document.getElementById("totalValue");
@@ -91,7 +90,7 @@ function renderMenuItems() {
 
     const priceEl = document.createElement("div");
     priceEl.className = "item-price";
-    priceEl.textContent = formatPrice(item.price);
+    priceEl.textContent = item.price.toLocaleString();
 
     const addBtnEl = document.createElement("button");
     addBtnEl.className = "add-item-btn";
@@ -140,32 +139,17 @@ function handleDiscountChange(e) {
   calculateTotals();
 }
 
-// تبدیل اعداد انگلیسی به فارسی
-function toFarsiNumber(n) {
-  const farsiDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  return n.toString().replace(/\d/g, (x) => farsiDigits[x]);
-}
-
-// تبدیل قیمت به فرمت فارسی
-function formatPrice(price) {
-  return toFarsiNumber(price.toLocaleString()) + " تومان";
-}
-
 // Calculate totals
 function calculateTotals() {
   const itemsArray = Object.values(state.selectedItems);
-
-  const subtotal = itemsArray.reduce(
-    (sum, { item, quantity }) => sum + item.price * quantity,
+  const total = itemsArray.reduce(
+    (acc, { item, quantity }) => acc + item.price * quantity,
     0
   );
+  const discountAmount = total * (state.discount / 100);
 
-  const discountAmount = subtotal * (state.discount / 100);
-  const total = subtotal - discountAmount;
-
-  subtotalValueEl.textContent = formatPrice(subtotal);
-  discountValueEl.textContent = "-" + formatPrice(discountAmount);
-  totalValueEl.textContent = formatPrice(total);
+  discountValueEl.textContent = discountAmount.toLocaleString();
+  totalValueEl.textContent = (total - discountAmount).toLocaleString();
 }
 
 // Render invoice
@@ -214,7 +198,7 @@ function renderInvoice() {
 
     const quantitySpan = document.createElement("span");
     quantitySpan.className = "quantity-value";
-    quantitySpan.textContent = toFarsiNumber(quantity);
+    quantitySpan.textContent = quantity.toLocaleString();
 
     const plusBtn = document.createElement("button");
     plusBtn.className = "quantity-btn";
@@ -232,12 +216,12 @@ function renderInvoice() {
     // Price cell
     const priceCell = document.createElement("td");
     priceCell.className = "price-cell";
-    priceCell.textContent = formatPrice(item.price);
+    priceCell.textContent = item.price.toLocaleString();
 
     // Total cell
     const totalCell = document.createElement("td");
     totalCell.className = "total-cell";
-    totalCell.textContent = formatPrice(item.price * quantity);
+    totalCell.textContent = (item.price * quantity).toLocaleString();
 
     // Add cells to row
     row.appendChild(nameCell);
@@ -249,7 +233,42 @@ function renderInvoice() {
     invoiceItemsEl.appendChild(row);
   });
 
+  // Calculate and display totals
   calculateTotals();
+
+  // Add discount and final total to the invoice
+  const discountRow = document.createElement("tr");
+  const discountCell = document.createElement("td");
+  discountCell.colSpan = 3; // Merge cells for discount
+  discountCell.textContent = "تخفیف:";
+  const discountValueCell = document.createElement("td");
+  discountValueCell.textContent = `${state.discount}`;
+
+  discountRow.appendChild(discountCell);
+  discountRow.appendChild(discountValueCell);
+  invoiceItemsEl.appendChild(discountRow);
+
+  const finalTotalRow = document.createElement("tr");
+  const finalTotalCell = document.createElement("td");
+  finalTotalCell.colSpan = 3; // Merge cells for final total
+  finalTotalCell.textContent = "جمع نهایی:";
+  const finalTotalValueCell = document.createElement("td");
+  finalTotalValueCell.textContent = calculateFinalTotal().toLocaleString();
+
+  finalTotalRow.appendChild(finalTotalCell);
+  finalTotalRow.appendChild(finalTotalValueCell);
+  invoiceItemsEl.appendChild(finalTotalRow);
+}
+
+// Calculate final total after discount
+function calculateFinalTotal() {
+  const itemsArray = Object.values(state.selectedItems);
+  const total = itemsArray.reduce(
+    (acc, { item, quantity }) => acc + item.price * quantity,
+    0
+  );
+  const discountAmount = total * (state.discount / 100);
+  return total - discountAmount;
 }
 
 // Reset invoice function
@@ -260,40 +279,111 @@ function resetInvoice() {
   renderInvoice();
 }
 
-/// اضافه کردن event listener برای دکمه پرینت
-// const printInvoiceBtn = document.getElementById("printInvoice");
-// printInvoiceBtn.addEventListener("click", printInvoice);
+// اضافه کردن event listener برای دکمه پرینت
+const printInvoiceBtn = document.getElementById("printInvoice");
+printInvoiceBtn.addEventListener("click", printInvoice);
 
-// // تابع پرینت فاکتور
-// function printInvoice() {
-//     const invoiceContent = document.getElementById("invoiceTable").cloneNode(true);
-//     const printWindow = window.open('', '', 'width=600,height=600');
-    
-//     printWindow.document.write(`
-//         <html dir="rtl">
-//             <head>
-//                 <title>پرینت فاکتور</title>
-//                 <style>
-//                     body { font-family: 'Vazirmatn', sans-serif; text-align: right; }
-//                     table { width: 100%; border-collapse: collapse; }
-//                     th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: right; }
-//                     th { background-color: #f2f2f2; }
-//                     .totals { margin-top: 20px; }
-//                     .totals div { display: flex; justify-content: space-between; }
-//                     .final-total { font-weight: bold; font-size: 18px; }
-//                 </style>
-//             </head>
-//             <body>
-//                 <h1>فاکتور سفارش</h1>
-//                 ${invoiceContent.innerHTML}
-//             </body>
-//         </html>
-//     `);
-    
-//     printWindow.document.close();
-//     printWindow.print();
-//     printWindow.close();
-// }
+// تابع پرینت فاکتور
+function printInvoice() {
+  const invoiceContent = document
+    .getElementById("invoiceTable")
+    .cloneNode(true);
+  const printWindow = window.open("", "", "width=600,height=600");
+
+  printWindow.document.write(`
+        <html dir="rtl">
+            <head>
+                <link href="https://cdn.jsdelivr.net/gh/rastikerdar/byekan@v2.0.0/font/BYekan.css" rel="stylesheet">
+                <title>پرینت فاکتور</title>
+                <style>
+                    .totals { margin-top: 20px; }
+                    .totals div { display: flex; justify-content: space-between; }
+                    body {font-family: 'BYekan', sans-serif; text-align: right;  margin: 20px; font-size:1.5rem;}                    
+                    table { width: 100%;  border-collapse: collapse;  margin-bottom: 20px;/  }
+                    th, td {  padding: 10px;  border: 1px solid #000;  text-align: right; font-size:1.5rem;}
+                    th {  background-color: #f2f2f2; }
+                    .final-total {  font-weight: bold;  font-size:1.5rem;}
+                    input,button {  display: none;  }
+                    h1 {color: #ffffff; background-color: #000000;}
+                </style>
+            </head>
+            <body>
+                <h1>هاویر</h1>
+                <span>شماره فاکتور</span><span style="margin-right: 50%;">شماره روزانه</span><br>
+                <span>مشتری </span><span style="margin-right: 50%;">${new Date().toLocaleTimeString(
+                  "fa-IR",
+                  { hour: "2-digit", minute: "2-digit" }
+                )} - ${new Date().toLocaleDateString("fa-IR")}</span><br>
+                <span>موبایل مشتری</span><br>
+                <span>آدرس </span>
+                
+                ${invoiceContent.innerHTML}
+                <h1>هاویر به یاد می ماند</h1>
+                <p>با مدیریت مجتبی رضاپور<br>
+                خیابان ساحلی ، جنب گمرک<br>
+                09103933306</p>
+                </p>
+
+            </body>
+        </html>
+    `);
+
+  printWindow.document.close();
+  printWindow.print();
+  printWindow.close();
+
+  const summaryWindow = window.open("", "", "width=600,height=600");
+  let summaryContent = `
+        <html dir="rtl">
+            <head>
+                <link href="https://cdn.jsdelivr.net/gh/rastikerdar/byekan@v2.0.0/font/BYekan.css" rel="stylesheet">
+                <title>فیش خلاصه</title>
+                <style>
+                    body {font-family: 'BYekan', sans-serif; text-align: right; margin: 20px; font-size:1.5rem;}
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                    th, td { padding: 10px; border: 1px solid #000; text-align: right; font-size:1.5rem;}
+                    th { background-color: #f2f2f2; }
+                </style>
+            </head>
+            <body>
+                <h1>فیش خلاصه</h1>
+                <span>شماره فاکتور</span><br>
+                <span>مشتری</span><span style="margin-right: 50%;">سالن</span><br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>کالا و خدمات</th>
+                            <th>تعداد</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+  `;
+
+  Object.values(state.selectedItems).forEach(({ item, quantity }) => {
+    summaryContent += `
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${quantity}</td>
+                        </tr>
+    `;
+  });
+
+  summaryContent += `
+                    </tbody>
+                </table>
+            </body>
+        </html>
+    `;
+
+  summaryWindow.document.write(summaryContent);
+  summaryWindow.document.close();
+
+  // اضافه کردن تاخیر قبل از پرینت فیش دوم
+  summaryWindow.onload = function () {
+    summaryWindow.print();
+    summaryWindow.close(); // بستن پنجره بعد از پرینت
+  };
+}
 
 // Initialize the app when the DOM is loaded
 document.addEventListener("DOMContentLoaded", init);
